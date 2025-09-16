@@ -2,7 +2,7 @@ public class Assign02_03 {
     public static boolean solve_3sum(Integer[] A) {
     	for (int i = 0; i < A.length; i++) {
             for (int j = i + 1; j < A.length; j++) {
-                if (Assign02_02.indexOf(A, A[i] + A[j]) != -1) {
+                if (Assign02_02.indexOf(A, A[i] + A[j]) != -1) { // Soft O(n^2) because it performs a binary search using i and j instead of a linear search
                     return true;
                 }
             }
