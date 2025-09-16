@@ -13,8 +13,8 @@ public class Payroll {
     }
 
     public void print() {
-        for (Employee person : people) {
-            System.out.println("Name: " + person.name + "ID: " + person.ID + "Salary: " + person.salary);
+        for (int i = 0; i < current_size; i++) {
+            System.out.println("Name: " + people[i].name + "ID: " + people[i].ID + "Salary: " + people[i].salary);
         }
     }
 
@@ -50,13 +50,13 @@ public class Payroll {
             if (people[i].name.equals(name)) {
                 return i;
             }
-            throw (new EmployeeNotFoundException());
         }
+        throw (new EmployeeNotFoundException());
     }
 
     public void add_payroll(Payroll source) {
         Employee[] modifiedPeople = new Employee[current_size + source.current_size];
-        for (int i = 0; i < current_size; ++) {
+        for (int i = 0; i < current_size; i++) {
             modifiedPeople[i] = people[i];
         }
         for (int i = 0; i < source.current_size; i++) {
