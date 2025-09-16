@@ -14,7 +14,7 @@ public class Payroll {
 
     public void print() {
         for (int i = 0; i < current_size; i++) {
-            System.out.println("Name: " + people[i].name + "ID: " + people[i].ID + "Salary: " + people[i].salary);
+            System.out.println("Name: " + people[i].name + " ID: " + people[i].ID + " Salary: $" + people[i].salary);
         }
     }
 
@@ -27,10 +27,10 @@ public class Payroll {
             for (int i = 0; i < current_size; i++) {
                 modifiedPeople[i] = people[i];
             }
-            current_size ++;
             modifiedPeople[current_size] = newbie;
             people = modifiedPeople;
         }
+        current_size ++;
     }
 
     public void remove_employee(int i) throws EmployeeIndexException {
@@ -66,6 +66,7 @@ public class Payroll {
         if (maximum_size < current_size) {
             maximum_size = current_size;
         }
+        people = modifiedPeople;
     }
 
     public void copy_payroll(Payroll source) {
