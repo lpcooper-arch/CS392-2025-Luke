@@ -48,14 +48,16 @@ public class TestPayroll {
         try {
             int index = first.find_employee(e3.name);
             System.out.println("Found at index: " + index); // Output: Found at index: 2
-        } catch (EmployeeNotFoundException e) {
+        }
+        catch (EmployeeNotFoundException e) {
             System.out.println("Employee not found");
         }
 
         // Should catch exception for a nonexistent employee
         try {
             first.find_employee("Nonexistent");
-        } catch (EmployeeNotFoundException e) {
+        }
+        catch (EmployeeNotFoundException e) {
             System.out.println("Correctly caught exception for nonexistent employee");
         }
 
@@ -63,14 +65,16 @@ public class TestPayroll {
         try {
             first.remove_employee(0);
             System.out.println("Removed employee at index 0");
-        } catch (EmployeeIndexException e) {
+        }
+        catch (EmployeeIndexException e) {
             System.out.println("Failed to remove employee at index 0");
         }
 
         // Should catch exception for invalid index
         try {
             first.remove_employee(10);
-        } catch (EmployeeIndexException e) {
+        }
+        catch (EmployeeIndexException e) {
             System.out.println("Correctly caught exception for invalid remove index");
         }
 
