@@ -23,7 +23,8 @@ public class Payroll {
             people[current_size] = newbie;
         }
         else {
-            Employee[] modifiedPeople = new Employee[current_size + 1];
+            maximum_size *= 2;
+            Employee[] modifiedPeople = new Employee[maximum_size];
             for (int i = 0; i < current_size; i++) {
                 modifiedPeople[i] = people[i];
             }
@@ -39,9 +40,10 @@ public class Payroll {
         }
 
         people[i] = null;
-        for (int j = i; j < current_size; j++) {
+        for (int j = i; j < current_size - 1; j++) {
             people[j] = people[j + 1];
         }
+        people[current_size - 1] = null;
         current_size --;
     }
     
@@ -55,16 +57,17 @@ public class Payroll {
     }
 
     public void add_payroll(Payroll source) {
-        Employee[] modifiedPeople = new Employee[current_size + source.current_size];
+
+        final int size = current_size + source.current_size;
+        while (size > maximum_size) {
+            maximum_size *= 2;
+        }
+        Employee[] modifiedPeople = new Employee[maximum_size];
         for (int i = 0; i < current_size; i++) {
             modifiedPeople[i] = people[i];
         }
         for (int i = 0; i < source.current_size; i++) {
             modifiedPeople[current_size + i] = source.people[i];
-        }
-        current_size += source.current_size;
-        if (maximum_size < current_size) {
-            maximum_size = current_size;
         }
         people = modifiedPeople;
     }
@@ -73,7 +76,7 @@ public class Payroll {
         current_size = 0;
         add_payroll(source);
     }
-
+    
     private Employee people[];
     private int maximum_size;
     private int current_size;
