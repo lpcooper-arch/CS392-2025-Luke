@@ -69,6 +69,7 @@ public class Payroll {
         for (int i = 0; i < source.current_size; i++) {
             modifiedPeople[current_size + i] = source.people[i];
         }
+        current_size += source.current_size;
         people = modifiedPeople;
     }
 
@@ -76,7 +77,7 @@ public class Payroll {
         current_size = 0;
         add_payroll(source);
     }
-    
+
     private Employee people[];
     private int maximum_size;
     private int current_size;
