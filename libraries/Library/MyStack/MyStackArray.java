@@ -1,3 +1,5 @@
+package Library.MyStack;
+
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
@@ -23,11 +25,12 @@ public class MyStackArray<T> extends MyStackBase<T> {
     }
 
     public T top$raw() {
-	return itms[0];
+	return itms[nitm-1];
     }
 
     public T pop$raw() {
-	nitm -= 1; return itms[nitm];
+	T itm = itms[nitm-1];
+	nitm -= 1; return itm;
     }
 
     public void push$raw(T itm) {
@@ -44,4 +47,10 @@ public class MyStackArray<T> extends MyStackBase<T> {
 	int m = nitm - 1;
 	for (int i = 0; i < nitm; i += 1) action.accept(i, itms[m-i]);
     }
+
+    @Override
+    public void rforitm(Consumer<? super T> action) {
+	for (int i = 0; i < nitm; i += 1) action.accept(itms[i]);
+    }
+
 }
