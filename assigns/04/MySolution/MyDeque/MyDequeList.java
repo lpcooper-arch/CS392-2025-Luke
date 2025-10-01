@@ -7,13 +7,16 @@ import Library.MyQueue.MyQueueFullExn;
 
 import java.util.function.BiConsumer;
 
-public class Assign04_02<T> implements MyQueue<T> {
+
+// This is the solution to Assign04_02
+
+public class MyDequeList<T> implements MyQueue<T> {
     
     private int nitm = 0;
     private FnList<T> frnt = null;
     private FnList<T> rear = null;
 
-    public Assign04_02() {
+    public MyDequeList() {
         frnt = new FnList<>();
         rear = new FnList<>();
     }
@@ -204,11 +207,11 @@ public class Assign04_02<T> implements MyQueue<T> {
 
     public void iforitm(BiConsumer<Integer, ? super T> action) {
         frnt.iforitm(action);
-        rear.reverse().irforitm(action);
+        rear.reverse().iforitm(action);
     }
 
     public void rforitm(Consumer<? super T> action) {
-        rear.foritm(action);
+        rear.rforitm(action);
         frnt.reverse().foritm(action);
     }
 
