@@ -1,144 +1,186 @@
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.function.BiPredicate;
 
 public class FnList<T> {
-    Node root;
-	
+    private Node head;
+    private Node tail;
+    private int size;
+
     private class Node {
-	T head;
-	FnList<T> tail;
-	Node(T x0, FnList<T> xs) {
-	    head = x0; tail = xs;
-	}
+        T value;
+        Node next;
+        Node prev;
+
+        Node(T value) {
+            this.value = value;
+        }
     }
 
     public FnList() {
-	root = null;
-    }
-    public FnList(T x0, FnList<T> xs) {
-	root = new Node(x0, xs);
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
     public boolean nilq() {
-	return (root == null);
+        return size == 0;
     }
+
     public boolean consq() {
-	return (root != null);
+        return size > 0;
     }
 
     public T hd() {
-	return root.head;
+        if (head == null) return null;
+        return head.value;
     }
+
     public FnList<T> tl() {
-	return root.tail;
+        if (head == null) return null;
+        FnList<T> result = new FnList<>();
+        Node current = head.next;
+        while (current != null) {
+            result.append(current.value);
+            current = current.next;
+        }
+        return result;
     }
-//
-    public int length() {
-	int res = 0;
-	FnList<T> xs = this;
-	while (true) {
-	    if (xs.nilq()) break;
-	    res += 1; xs = xs.tl();
-	}
-	return res;
+
+    public void prepend(T value) {
+        Node node = new Node(value);
+        if (head == null) head = tail = node;
+        else {
+            node.next = head;
+            head.prev = node;
+            head = node;
+        }
+
+        size++;
     }
-//
+
+    public void append(T value) {
+        Node node = new Node(value);
+        if (tail == null) head = tail = node;
+
+        else {
+            node.prev = tail;
+            tail.next = node;
+            tail = node;
+        }
+
+        size++;
+    }
+
+    public T removeFirst() {
+        if (head == null) return null;
+        T val = head.value;
+        head = head.next;
+        if (head != null) head.prev = null;
+        else tail = null;
+        size--;
+        return val;
+    }
+
+    public T removeLast() {
+        if (tail == null) return null;
+        T val = tail.value;
+        tail = tail.prev;
+        if (tail != null) tail.next = null;
+        else head = null;
+        size--;
+        return val;
+    }
+
     public FnList<T> reverse() {
-	return FnListUtil.reverse(this);
+        FnList<T> rev = new FnList<>();
+        Node current = tail;
+        while (current != null) {
+            rev.append(current.value);
+            current = current.prev;
+        }
+        return rev;
     }
-    public FnList<T>
-	rappend(FnList<T> ys) {
-	return FnListUtil.rappend(this, ys);
-    }
-//
+
     public void System$out$print() {
-    	System.out.print("FnList(");
-	this.iforitm
-	(
-          (i, itm) ->
-	  {
-	      if (i > 0) {
-		  System.out.print(",");
-	      }
-	      System.out.print(itm.toString());
-	  }
-	);
-	System.out.print(")");
+        System.out.print("FnList(");
+        this.iforitm((i, itm) -> {
+            if (i > 0) System.out.print(",");
+            System.out.print(itm.toString());
+        });
+        System.out.println(")");
     }
-//
-    void foritm(Consumer<? super T> action) {
-	FnList<T> xs = this;
-	while (true) {
-	    if (xs.nilq()) break;
-	    action.accept(xs.hd());
-	    xs = xs.tl();
-	}
+
+    public void foritm(Consumer<? super T> action) {
+        Node current = head;
+        while (current != null) {
+            action.accept(current.value);
+            current = current.next;
+        }
     }
-    void rforitm(Consumer<? super T> action) {
-	FnList<T> xs = this.reverse();
-	while (true) {
-	    if (xs.nilq()) break;
-	    action.accept(xs.hd());
-	    xs = xs.tl();
-	}
+
+    public void rforitm(Consumer<? super T> action) {
+        Node current = tail;
+        while (current != null) {
+            action.accept(current.value);
+            current = current.prev;
+        }
     }
-    void iforitm(BiConsumer<Integer, ? super T> action) {
-	int i0 = 0;
-	FnList<T> xs = this;
-	while (true) {
-	    if (xs.nilq()) break;
-	    action.accept(i0, xs.hd());
-	    i0 += 1; xs = xs.tl();
-	}
+
+    public void iforitm(BiConsumer<Integer, ? super T> action) {
+        Node current = head;
+        int i = 0;
+        while (current != null) {
+            action.accept(i++, current.value);
+            current = current.next;
+        }
     }
-    void irforitm(BiConsumer<Integer, ? super T> action) {
-	int i0 = 0;
-	FnList<T> xs = this.reverse();
-	while (true) {
-	    if (xs.nilq()) break;
-	    action.accept(i0, xs.hd());
-	    i0 += 1; xs = xs.tl();
-	}
+
+    public void irforitm(BiConsumer<Integer, ? super T> action) {
+        Node current = tail;
+        int i = 0;
+        while (current != null) {
+            action.accept(i++, current.value);
+            current = current.prev;
+        }
     }
-//
-    boolean forall(Predicate<? super T> pred) {
-	FnList<T> xs = this;
-	while (true) {
-	    if (xs.nilq()) break;
-	    if (!pred.test(xs.hd())) return false;
-	    xs = xs.tl();
-	}
-	return true;
+
+    public boolean forall(Predicate<? super T> pred) {
+        Node current = head;
+        while (current != null) {
+            if (!pred.test(current.value)) return false;
+            current = current.next;
+        }
+        return true;
     }
-    boolean rforall(Predicate<? super T> pred) {
-	FnList<T> xs = this.reverse();
-	while (true) {
-	    if (xs.nilq()) break;
-	    if (!pred.test(xs.hd())) return false;
-	    xs = xs.tl();
-	}
-	return true;
+
+    public boolean rforall(Predicate<? super T> pred) {
+        Node current = tail;
+        while (current != null) {
+            if (!pred.test(current.value)) return false;
+            current = current.prev;
+        }
+        return true;
     }
-    boolean iforall(BiPredicate<Integer, ? super T> pred) {
-	int i0 = 0;
-	FnList<T> xs = this;
-	while (true) {
-	    if (xs.nilq()) break;
-	    if (!pred.test(i0, xs.hd())) return false;
-	    i0 += 1; xs = xs.tl();
-	}
-	return true;
+
+    public boolean iforall(BiPredicate<Integer, ? super T> pred) {
+        Node current = head;
+        int i = 0;
+        while (current != null) {
+            if (!pred.test(i++, current.value)) return false;
+            current = current.next;
+        }
+        return true;
     }
-    boolean irforall(BiPredicate<Integer, ? super T> pred) {
-	int i0 = 0;
-	FnList<T> xs = this.reverse();
-	while (true) {
-	    if (xs.nilq()) break;
-	    if (!pred.test(i0, xs.hd())) return false;
-	    i0 += 1; xs = xs.tl();
-	}
-	return true;
+
+    public boolean irforall(BiPredicate<Integer, ? super T> pred) {
+        Node current = tail;
+        int i = 0;
+        while (current != null) {
+            if (!pred.test(i++, current.value)) return false;
+            current = current.prev;
+        }
+        return true;
     }
-} // end of [public class FnList<T>{...}]
+}

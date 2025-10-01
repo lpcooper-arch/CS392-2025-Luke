@@ -1,4 +1,4 @@
-package MyLibrary.MyQueue;
+package MyDeque;
 
 import Library.FnList.*;
 import java.util.function.Consumer;
