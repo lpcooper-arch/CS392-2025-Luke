@@ -1,3 +1,5 @@
+package MyLibrary.FnList;
+
 import java.util.function.Function;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -126,29 +128,24 @@ public class FnListUtil {
 	return xs.reverse().iforall(pred);
     }
 //
+/*
+    public static<T>
+	FnList<T> reverse(FnList<T> xs) {
+	FnList<T> ys;
+	ys = new FnList();
+	while (true) {
+            if (xs.nilq()) break;
+	    ys = new FnList(xs.hd(), ys); xs = xs.tl();
+	}
+	return ys;
+    }
+*/
     public static<T>
 	FnList<T> reverse(FnList<T> xs) {
 	FnList<T> r0 = new FnList<T>();
 	return FnListUtil.folditm
 	    (xs, r0, (r1, x1) -> new FnList<T>(x1, r1));
     }
-
-/*
- * public static<T>
- * FnList<t> reverse(FnList<T> xs) {
- * 		FnList<T> ys;
- * 		ys = new FnList();
- * 		while (!xs.nilq()) {
- * 			ys = FnList(xs.hd(), ys);
- * 			xs = xs.tl();
- * 		}
- * 
- * 		return ys;
- * }
- */
-
-
-
 //
     public static<T>
 	FnList<T> rappend(FnList<T> xs, FnList<T> ys) {

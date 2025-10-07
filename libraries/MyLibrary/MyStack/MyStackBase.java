@@ -1,5 +1,4 @@
-
-package Library.MyStack;
+package MyLibrary.MyStack;
 
 import Library.FnList.*;
 import java.util.function.Consumer;

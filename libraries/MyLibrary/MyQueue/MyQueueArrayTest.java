@@ -1,3 +1,5 @@
+package MyLibrary.MyQueue;
+
 import MyLibrary.MyQueue.*;
 
 public class MyQueueArrayTest {
