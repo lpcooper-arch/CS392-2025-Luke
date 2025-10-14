@@ -1,5 +1,4 @@
 package MyDeque;
-import MyDeque.MyQueueBase;
 
 import java.util.function.Consumer;
 

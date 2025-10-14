@@ -1,6 +1,6 @@
 package MyDeque;
 
-import Library.FnList.*;
+import MyLibrary.FnList.*;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
