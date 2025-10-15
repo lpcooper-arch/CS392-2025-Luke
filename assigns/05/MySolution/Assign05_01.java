@@ -6,8 +6,8 @@ public class Assign05_01 {
 
 
 	// Helper class used to avoid using an array in split method (used for type safety)
-	private static class FnListPair<T> {
-		public final FnList<T> left;
+    private static class FnListPair<T> {
+        public final FnList<T> left;
 		public final FnList<T> right;
 
 		public FnListPair(FnList<T> left, FnList<T> right) {
