@@ -49,12 +49,12 @@ public class Assign05_02 {
     public static void main(String[] args) {
 		FnList<Integer> unsortedNums = FnListSUtil.rand$int$make(1000000);
     	System.out.print("Unsorted Numbers: ");
-        FnListSUtil.System$out$print(unsortedNums);
+        unsortedNums.System$out$print();
         System.out.println();
 
         FnList<Integer> sortedNums = insertSort(unsortedNums);
         System.out.print("Sorted Numbers: ");
-        FnListSUtil.System$out$print(sortedNums);
+        sortedNums.System$out$print();
     }
 }
  // end of [public class Assign05_02{...}]
