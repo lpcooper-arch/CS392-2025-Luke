@@ -23,7 +23,8 @@ public class MyDequeList<T> extends MyDequeBase<T> {
 
     public MyDequeList() {
 	    nitm = 0;
-        itms = null;
+        frnt = null;
+        rear = null;
     }
 
     public int size() {

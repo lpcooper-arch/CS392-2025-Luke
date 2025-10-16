@@ -1,4 +1,4 @@
-import MyLibrary.MyStack.*;
+package MyLibrary.MyStack;
 
 public class MyStackArrayTest {
     public static void main(String[] args) {
