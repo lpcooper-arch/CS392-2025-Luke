@@ -47,7 +47,7 @@ public class Assign05_02 {
 	}
 	
     public static void main(String[] args) {
-		FnList<Integer> unsortedNums = FnListSUtil.rand$int$make(1000000);
+		FnList<Integer> unsortedNums = FnListSUtil.rand$int$make(1_000_000);
     	System.out.print("Unsorted Numbers: ");
         unsortedNums.System$out$print();
         System.out.println();

@@ -73,7 +73,7 @@ abstract public class Quiz01_06 {
 
     public static void main(String[] args) {
         int n = 1_000_000;
-        System.out.println("Creating list...");
+		System.out.println("Creating list...");
         FnList<Integer> list = createLargeList(n);
 
         System.out.println("Sorting list with parity comparator...");
