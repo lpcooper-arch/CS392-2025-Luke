@@ -1,6 +1,6 @@
 package MyDeque;
 
-public class Assign03_03<T> extends MyQueueBase<T> {
+public abstract class Assign03_03<T> extends MyQueueBase<T> {
 
     int nitm = -1;
     FnList<T> frnt = null;
@@ -33,7 +33,8 @@ public class Assign03_03<T> extends MyQueueBase<T> {
     }
 
     public void enque$raw(T itm) {
-        rear = new FnList<T>(itm, rear);
+        rear.prepend(itm);
+        nitm ++;
     }
 
     public boolean isEmpty() {

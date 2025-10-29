@@ -185,4 +185,8 @@ public class FnList<T> {
         }
         return true;
     }
+
+    public int size() {
+        return size;
+    }
 }
