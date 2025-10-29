@@ -11,27 +11,26 @@ import java.util.function.BiConsumer;
 
 public class MyDequeList<T> implements MyQueue<T> {
     
+    private class Node {
+        T value;
+        Node next;
+        Node prev;
+
+        Node(T val) {
+            value = val;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+
+
     private int nitm = 0;
-    private FnList<T> frnt = null;
-    private FnList<T> rear = null;
+    private Node head = null;
+    private Node tail = null;
 
     public MyDequeList() {
-        frnt = new FnList<>();
-        rear = new FnList<>();
-    }
-
-    private void fillEmptyFront() { //Helper method for when the front FnList is empty
-        if (frnt.nilq()) {
-            frnt = rear.reverse();
-            rear = new FnList<>();
-        }
-    }
-
-    private void fillEmptyRear() { //Same as fillEmptyFront, but for the rear instead
-        if (rear.nilq()) {
-            rear = frnt.reverse();
-            frnt = new FnList<>();
-        }
+        
     }
 
     public int size() {
@@ -43,14 +42,12 @@ public class MyDequeList<T> implements MyQueue<T> {
     }
 
     public boolean isEmpty() {
-        return frnt.nilq() && rear.nilq();
+        return nitm == 0;
     }
 
 
-
     public T fpeek$raw() {
-        fillEmptyFront();
-        return frnt.hd();
+        return head.value;
     }
 
     public T fpeek$opt() {
@@ -66,8 +63,7 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
     public T rpeek$raw() {
-        fillEmptyRear();
-        return rear.hd();
+        return tail.value;
     }
 
     public T rpeek$opt() {
@@ -83,8 +79,15 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
     public void fenque$raw(T itm) {
-        fillEmptyFront();
-        frnt.prepend(itm);
+        Node node = new Node(itm);
+        if (isEmpty()) {
+            head = node;
+            tail = node;
+        } else {
+            node.next = head;
+            head.prev = node;
+            head = node;
+        }
         nitm ++;
     }
 
@@ -99,8 +102,15 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
     public void renque$raw(T itm) {
-        fillEmptyRear();
-        rear.prepend(itm);
+        Node node = new Node(itm);
+        if (isEmpty()) {
+            head = node;
+            tail = node;
+        } else {
+            node.prev = tail;
+            tail.next = node;
+            tail = node;
+        }
         nitm ++;
     }
 
@@ -115,9 +125,14 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
     public T fdeque$raw() {
-        fillEmptyFront();
-        T val = frnt.removeFirst();
-        if (val != null) nitm--;
+        T val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        } else {
+            head.prev = null;
+        }
+        nitm --;
         return val;
     }
 
@@ -133,9 +148,14 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
     public T rdeque$raw() {
-        fillEmptyRear();
-        T val = rear.removeFirst();
-        if (val != null) nitm--;
+        T val = tail.value;
+        tail = tail.prev;
+        if (tail == null) {
+            head = null;
+        } else {
+            tail.next = null;
+        }
+        nitm --;
         return val;
     }
 
@@ -192,30 +212,50 @@ public class MyDequeList<T> implements MyQueue<T> {
 
 
      public void System$out$print() {
-        System.out.print("Assign04_02 front: ");
-        frnt.System$out$print();
-        System.out.print("Assign04_02 rear: ");
-        rear.System$out$print();
+        System.out.print("DequeList(");
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.value);
+            current = current.next;
+            if (current != null) {System.out.print(", ");}
+        }
+        System.out.println(")");
     }
 
 
     public void foritm(Consumer<? super T> action) {
-        frnt.foritm(action);
-        rear.reverse().foritm(action);
+        Node current = head;
+        while (current != null) {
+            action.accept(current.value);
+            current = current.next;
+        }
     }
 
     public void iforitm(BiConsumer<Integer, ? super T> action) {
-        frnt.iforitm(action);
-        rear.reverse().iforitm(action);
+        Node current = head;
+        int index = 0;
+        while (current != null) {
+            action.accept(index, current.value);
+            current = current.next;
+            index ++;
+        }
     }
 
     public void rforitm(Consumer<? super T> action) {
-        rear.rforitm(action);
-        frnt.reverse().foritm(action);
+        Node current = tail;
+        while (current != null) {
+            action.accept(current.value);
+            current = current.prev;
+        }
     }
 
     public void irforitm(BiConsumer<Integer, ? super T> action) {
-        rear.irforitm(action);
-        frnt.reverse().iforitm(action);
+        Node current = tail;
+        int index = nitm - 1;
+        while (current != null) {
+            action.accept(index, current.value);
+            current = current.prev;
+            index --;
+        }
     }
 }

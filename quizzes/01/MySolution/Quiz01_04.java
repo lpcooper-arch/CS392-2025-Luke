@@ -21,63 +21,68 @@ public class Quiz01_04 {
 			LnList<T> current = sortedList;
 			LnList<T> next = current.tl1();
 
-
-			while (!next.nilq1() && next.hd1().compareTo(nodeVal) < 0) {
-			current = next;
-			next = current.tl1();
+			while (next.consq1() && next.hd1().compareTo(nodeVal) < 0) {
+				current = next;
+				next = current.tl1();
 			}
 
-			node.link(next);
 			current.unlink();
+			node.link(next);
 			current.link(node);
 
 			return sortedList;
 		}
-
 	}
 
 
-    public static
+	public static
 	<T extends Comparable<T>>
 	LnList<T> LnListInsertSort(LnList<T> xs) {
-	// HX-2025-10-12:
-	// Please implement (stable) insert sort on a
-	// linked list (LnList).
-	// Note that you are not allowed to modify the definition
-	// of the LnList class. You can only use the public methods
-	// provided by the LnList class
+		// HX-2025-10-12:
+		// Please implement (stable) insert sort on a
+		// linked list (LnList).
+		// Note that you are not allowed to modify the definition
+		// of the LnList class. You can only use the public methods
+		// provided by the LnList class
 		
+		if (xs.nilq1()) {
+			return xs;
+		}
 
-	LnList<T> sorted = xs.unlink();
-	xs = xs.tl1();
+		
+		LnList<T> rest = xs.tl1();
+		xs.unlink();
+		LnList<T> sorted = xs;
+		xs = rest;
 
-	while (xs.consq1()) {
-		LnList<T> next = xs.tl1();
-		LnList<T> node = xs.unlink();
-		sorted = orderedInsert(sorted, node);
-		xs = next;
+		while (xs.consq1()) {
+			rest = xs.tl1();
+			xs.unlink();
+			LnList<T> node = xs;
+			sorted = orderedInsert(sorted, node);
+			xs = rest;
+		}
+
+		return sorted;
 	}
-
-	return sorted;
-
-    }
-    public static void main (String[] args) {
-	// HX-2025-10-12:
-	// Please write minimal testing code for LnListInsertSort
+	
+	public static void main (String[] args) {
+		// HX-2025-10-12:
+		// Please write minimal testing code for LnListInsertSort
 
 		LnList<Integer> list = new LnList<>();
 		
-		list = new LnList<>(4, list);
-		list = new LnList<>(5, list);
-		list = new LnList<>(3, list);
-		list = new LnList<>(7, list);
-		list = new LnList<>(7, list);
-		list = new LnList<>(2, list);
+		
+		for (int i = 9; i >= 0; i--) {
+			int val = (int) (Math.random() * 10);
+			list = new LnList<Integer>(val, list);
+		}
 		
 		System.out.print("Original: ");
 		list.System$out$print1();
 
+		LnList<Integer> sorted = LnListInsertSort(list);
 		System.out.print("\nSorted: ");
-		LnListInsertSort(list).System$out$print1();
-    }
+		sorted.System$out$print1();
+	}
 }

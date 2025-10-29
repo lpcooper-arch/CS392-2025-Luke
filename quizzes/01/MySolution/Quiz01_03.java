@@ -100,12 +100,43 @@ public class Quiz01_03 {
 		sortTwoBoxes(pair, b3, b4);
 		sortTwoBoxes(pair, b6, b7);
 
+	@SuppressWarnings("unchecked")
+	T[] result = (T[]) java.lang.reflect.Array.newInstance(x0.getClass(), 10);
 
-	T[] result = (T[]) new Comparable[] {
-		b0.value, b1.value, b2.value, b3.value, b4.value, b5.value, b6.value, b7.value, b8.value, b9.value
-	};
+	result[0] = b0.value;
+	result[1] = b1.value;
+	result[2] = b2.value;
+	result[3] = b3.value;
+	result[4] = b4.value;
+	result[5] = b5.value;
+	result[6] = b6.value;
+	result[7] = b7.value;
+	result[8] = b8.value;
+	result[9] = b9.value;
 
 	return result;
+	}
+
+	public static void main(String[] args) {
+		Integer[] nums = new Integer[10];
+		for (int i = 0; i < 10; i++) {
+			nums[i] = (int) (Math.random() * 100);
+		}
+
+		System.out.print("Original: ");
+		for (int i : nums) {
+			System.out.print(i + " ");
+		}
+		System.out.println("\n");
+
+		nums = sort10WithNoRecursion(nums[0], nums[1], nums[2], nums[3], nums[4], 
+		nums[5], nums[6], nums[7], nums[8], nums[9]);
+
+		System.out.print("Sorted: ");
+		for (int i : nums) {
+			System.out.print(i + " ");
+		}
+		System.out.println("\n");
 	}
 }
  
