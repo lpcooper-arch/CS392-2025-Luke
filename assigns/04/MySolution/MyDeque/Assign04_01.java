@@ -26,24 +26,29 @@ public class Assign04_01<T> extends Assign03_03<T> {
 
 
     public void foritm(Consumer<? super T> action) {
-      fillEmptyFront();
       frnt.foritm(action);
+      rear.reverse().foritm(action);
     }
 
     public void iforitm(BiConsumer<Integer, ? super T> action) {
-      fillEmptyFront();
       frnt.iforitm(action);
+      final int[] index = {frnt.size()};
+
+      rear.reverse().foritm(item -> action.accept(index[0]++, item));
     }
     
     
     public void rforitm(Consumer<? super T> action) {
-      fillEmptyFront();
-      frnt.reverse().rforitm(action);
+      rear.foritm(action);
+      frnt.reverse().foritm(action);
     }
 
     public void irforitm(BiConsumer<Integer, ? super T> action) {
-      fillEmptyFront();
-      frnt.reverse().irforitm(action);
+      rear.iforitm(action);
+      final int[] index = {rear.size()};
+
+      frnt.reverse().foritm(item -> action.accept(index[0]++, item));
+
     }
 
 
