@@ -29,6 +29,7 @@ public abstract class Assign03_03<T> extends MyQueueBase<T> {
         fillEmptyFront();
         T temp = frnt.hd();
         frnt = frnt.tl();
+        nitm --;
         return temp;
     }
 
