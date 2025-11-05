@@ -1,5 +1,7 @@
-import MyLibrary.LnStrm.*;
-import MyLibrary.FnTuple.*;
+import LnStrm.*;
+import LnStrm.LnStcn;
+import LnStrm.LnStrmSUtil;
+import FnTuple.*;
 /*
 import java.util.Random;
 import java.util.function.Function;
@@ -59,6 +61,31 @@ public class Assign06_02 {
 
     private static
     LnStcn<Integer>
+    skipSumAndFindNext(
+        LnStrm<FnTupl2<Integer,Integer>> pairs,
+        int sumToSkip) {
+        
+        LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
+        
+        if (stcn == null || stcn.nilq()) {
+            return null;
+        }
+        
+        FnTupl2<Integer,Integer> curr = stcn.head;
+        int currSum = curr.s0() * curr.s0() * curr.s0() + 
+                     curr.s1() * curr.s1() * curr.s1();
+        
+        if (currSum == sumToSkip) {
+            // Still on the same sum, keep skipping with lazy evaluation
+            return (new LnStrm<Integer>(() -> skipSumAndFindNext(stcn.tail, sumToSkip))).eval0();
+        } else {
+            // Moved to a different sum, start looking for next Ramanujan
+            return findNextRamanujan(pairs, null, null, 0);
+        }
+    }
+
+    private static
+    LnStcn<Integer>
     findNextRamanujan(
         LnStrm<FnTupl2<Integer,Integer>> pairs, 
         FnTupl2<Integer,Integer> prev,
@@ -80,13 +107,16 @@ public class Assign06_02 {
         if (prevSum != null && currSum == prevSum) {
             int newCount = count + 1;
             if (newCount >= 2) {
+                // Found a Ramanujan number - return it with lazy tail
                 return new LnStcn<>(currSum, 
-                    new LnStrm<>(() -> findNextRamanujan(tail, curr, currSum, 0)));
+                    new LnStrm<>(() -> skipSumAndFindNext(tail, currSum)));
             } else {
-                return findNextRamanujan(tail, curr, currSum, newCount);
+                // Same sum but not enough occurrences yet - use lazy evaluation
+                return (new LnStrm<Integer>(() -> findNextRamanujan(tail, curr, currSum, newCount))).eval0();
             }
         } else {
-            return findNextRamanujan(tail, curr, currSum, 1);
+            // Different sum - use lazy evaluation to continue searching
+            return (new LnStrm<Integer>(() -> findNextRamanujan(tail, curr, currSum, 1))).eval0();
         }
     }
 
@@ -96,15 +126,14 @@ public class Assign06_02 {
         LnStrm<FnTupl2<Integer,Integer>> pairs = cubeSumOrderedIntegerPairs();
         
         System.out.println("First 10 pairs:");
-        LnStrm<FnTupl2<Integer,Integer>> pairsCopy = pairs;
         for (int i = 0; i < 10; i++) {
-            LnStcn<FnTupl2<Integer,Integer>> stcn = pairsCopy.eval0();
+            LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
             if (stcn != null && stcn.consq()) {
                 FnTupl2<Integer,Integer> p = stcn.head;
                 int sum = p.s0() * p.s0() * p.s0() + 
                          p.s1() * p.s1() * p.s1();
                 System.out.println("(" + p.s0() + ", " + p.s1() + ") -> " + sum);
-                pairsCopy = stcn.tail;
+                pairs = stcn.tail;
             }
         }
         

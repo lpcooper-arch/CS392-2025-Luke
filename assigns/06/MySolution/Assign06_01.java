@@ -1,4 +1,4 @@
-import MyLibrary.LnStrm.*;
+import LnStrm.*;
 
 /*
 
@@ -72,9 +72,5 @@ public class Assign06_01 {
                 return new LnStcn<>(x2, mergeLnStrm(new_xss, cmpr));
             }
         });
-    }
-
-    public static void main(String[] args) {
-        System.out.println("TEST");
     }
 } // end of [public class Assign06_01{...}]
