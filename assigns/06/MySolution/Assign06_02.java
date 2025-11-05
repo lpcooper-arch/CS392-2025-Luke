@@ -120,31 +120,37 @@ findNextRamanujan(
 
 
     public static void main(String[] args) {
-	// Please provide some minimal testing code
-        System.out.println("Testing cube sum ordered pairs:");
-        LnStrm<FnTupl2<Integer,Integer>> pairs = cubeSumOrderedIntegerPairs();
-        
-        System.out.println("First 10 pairs:");
-        for (int i = 0; i < 10; i++) {
-            LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
-            if (stcn != null && stcn.consq()) {
-                FnTupl2<Integer,Integer> p = stcn.head;
-                int sum = p.s0() * p.s0() * p.s0() + 
-                         p.s1() * p.s1() * p.s1();
-                System.out.println("(" + p.s0() + ", " + p.s1() + ") -> " + sum);
-                pairs = stcn.tail;
-            }
-        }
-        
-        System.out.println("\nFirst 5 Ramanujan numbers:");
-        LnStrm<Integer> ramanujans = ramanujanNumbers();
-        for (int i = 0; i < 5; i++) {
-            LnStcn<Integer> stcn = ramanujans.eval0();
-            if (stcn != null && stcn.consq()) {
-                System.out.println(stcn.head);
-                ramanujans = stcn.tail;
-            }
+    // Please provide some minimal testing code
+    System.out.println("Testing cube sum ordered pairs:");
+    LnStrm<FnTupl2<Integer,Integer>> pairs = cubeSumOrderedIntegerPairs();
+    
+    System.out.println("First 10 pairs:");
+    for (int i = 0; i < 10; i++) {
+        LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
+        if (stcn != null && stcn.consq()) {
+            FnTupl2<Integer,Integer> p = stcn.head;
+            int sum = p.s0() * p.s0() * p.s0() + 
+                     p.s1() * p.s1() * p.s1();
+            System.out.println("(" + p.s0() + ", " + p.s1() + ") -> " + sum);
+            pairs = stcn.tail;
         }
     }
+    
+    System.out.println("\nFirst 5 Ramanujan numbers:");
+    LnStrm<Integer> ramanujans = ramanujanNumbers();
+    int count = 0;
+    while (count < 5) {
+        LnStcn<Integer> stcn = ramanujans.eval0();
+        if (stcn == null || stcn.nilq()) break;
+        
+        // Skip null heads (these are placeholder nodes)
+        if (stcn.head != null) {
+            System.out.println(stcn.head);
+            count++;
+        }
+        
+        ramanujans = stcn.tail;
+    }
+}
 
 } // end of [public class Assign06_02{...}]
