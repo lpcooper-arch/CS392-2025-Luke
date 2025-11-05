@@ -1,3 +1,4 @@
+package MyLibrary.LnStrm;
 //
 // HX-2025-10-23:
 // typedef LStrm<T> = Supplier<LStcn<T>>

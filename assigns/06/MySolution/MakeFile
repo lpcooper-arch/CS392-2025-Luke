@@ -1,0 +1,17 @@
+SOURCES = Assign06_01.java Assign06_02.java Assign06_03.java
+CLASSES = Assign06_01.class Assign06_02.class Assign06_03.class
+
+all: compile run
+
+compile:
+	javac $(SOURCES)
+
+run:
+	java Assign06_01
+	java Assign06_02
+	java Assign06_03
+
+clean:
+	rm -f $(CLASSES)
+
+.PHONY: all compile run clean
