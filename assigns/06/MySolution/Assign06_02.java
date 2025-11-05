@@ -60,65 +60,64 @@ public class Assign06_02 {
     }
 
     private static
-    LnStcn<Integer>
-    skipSumAndFindNext(
-        LnStrm<FnTupl2<Integer,Integer>> pairs,
-        int sumToSkip) {
-        
-        LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
-        
-        if (stcn == null || stcn.nilq()) {
-            return null;
-        }
-        
-        FnTupl2<Integer,Integer> curr = stcn.head;
-        int currSum = curr.s0() * curr.s0() * curr.s0() + 
-                     curr.s1() * curr.s1() * curr.s1();
-        
-        if (currSum == sumToSkip) {
-            // Still on the same sum, keep skipping with lazy evaluation
-            return (new LnStrm<Integer>(() -> skipSumAndFindNext(stcn.tail, sumToSkip))).eval0();
-        } else {
-            // Moved to a different sum, start looking for next Ramanujan
-            return findNextRamanujan(pairs, null, null, 0);
-        }
+LnStcn<Integer>
+skipSumAndFindNext(
+    LnStrm<FnTupl2<Integer,Integer>> pairs,
+    int sumToSkip) {
+    
+    LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
+    
+    if (stcn == null || stcn.nilq()) {
+        return null;
     }
+    
+    FnTupl2<Integer,Integer> curr = stcn.head;
+    int currSum = curr.s0() * curr.s0() * curr.s0() + 
+                  curr.s1() * curr.s1() * curr.s1();
+    
+    if (currSum == sumToSkip) {
+        
+        return null == stcn.tail ? null
+            : new LnStcn<>(null, new LnStrm<>(() -> skipSumAndFindNext(stcn.tail, sumToSkip)));
+    } else {
+        
+        return new LnStcn<>(currSum, new LnStrm<>(() -> findNextRamanujan(stcn.tail, curr, currSum, 1)));
+    }
+}
 
-    private static
-    LnStcn<Integer>
-    findNextRamanujan(
-        LnStrm<FnTupl2<Integer,Integer>> pairs, 
-        FnTupl2<Integer,Integer> prev,
-        Integer prevSum,
-        int count) {
-        
-        LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
-        
-        if (stcn == null || stcn.nilq()) {
-            return null;
-        }
-        
-        FnTupl2<Integer,Integer> curr = stcn.head;
-        LnStrm<FnTupl2<Integer,Integer>> tail = stcn.tail;
-        
-        int currSum = curr.s0() * curr.s0() * curr.s0() + 
-                     curr.s1() * curr.s1() * curr.s1();
-        
-        if (prevSum != null && currSum == prevSum) {
-            int newCount = count + 1;
-            if (newCount >= 2) {
-                // Found a Ramanujan number - return it with lazy tail
-                return new LnStcn<>(currSum, 
-                    new LnStrm<>(() -> skipSumAndFindNext(tail, currSum)));
-            } else {
-                // Same sum but not enough occurrences yet - use lazy evaluation
-                return (new LnStrm<Integer>(() -> findNextRamanujan(tail, curr, currSum, newCount))).eval0();
-            }
-        } else {
-            // Different sum - use lazy evaluation to continue searching
-            return (new LnStrm<Integer>(() -> findNextRamanujan(tail, curr, currSum, 1))).eval0();
-        }
+private static
+LnStcn<Integer>
+findNextRamanujan(
+    LnStrm<FnTupl2<Integer,Integer>> pairs, 
+    FnTupl2<Integer,Integer> prev,
+    Integer prevSum,
+    int count) {
+    
+    LnStcn<FnTupl2<Integer,Integer>> stcn = pairs.eval0();
+    
+    if (stcn == null || stcn.nilq()) {
+        return null;
     }
+    
+    FnTupl2<Integer,Integer> curr = stcn.head;
+    LnStrm<FnTupl2<Integer,Integer>> tail = stcn.tail;
+    
+    int currSum = curr.s0() * curr.s0() * curr.s0() + 
+                  curr.s1() * curr.s1() * curr.s1();
+    
+    if (prevSum != null && currSum == prevSum) {
+        int newCount = count + 1;
+        if (newCount >= 2) {
+            
+            return new LnStcn<>(currSum, new LnStrm<>(() -> skipSumAndFindNext(tail, currSum)));
+        } else {
+            return new LnStcn<>(null, new LnStrm<>(() -> findNextRamanujan(tail, curr, currSum, newCount)));
+        }
+    } else {
+        return new LnStcn<>(null, new LnStrm<>(() -> findNextRamanujan(tail, curr, currSum, 1)));
+    }
+}
+
 
     public static void main(String[] args) {
 	// Please provide some minimal testing code
