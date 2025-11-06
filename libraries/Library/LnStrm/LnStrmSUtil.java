@@ -1,4 +1,8 @@
 //
+package Library.LnStrm;
+//
+import Library.FnList.*;
+//
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.function.Function;
@@ -8,7 +12,7 @@ import java.util.function.UnaryOperator;
 // HX-2025-10-23:
 // typedef LnStrm<T> = Supplier<LnStcn<T>>
 //
-class LnStrmSUtil {
+public class LnStrmSUtil {
 
     public static<T>
 	LnStcn<T> eval0(LnStrm<T> fxs) {
@@ -74,6 +78,11 @@ class LnStrmSUtil {
 	      return new LnStcn<T>(); // no satisfying elements found
 	  }
        );
+    }
+//
+    public static<T>
+	FnList<T> toFnList0(LnStrm<T> fxs) {
+	return FnListSUtil.fwork$make((work) -> fxs.foritm0(work));
     }
 //
 } // end of [class LnStrmSUtil{...}]
