@@ -222,23 +222,13 @@ public class Assign07_02 {
 		}
 		System.out.println(parameters[parameters.length - 1] + "\n");
 
-		
-		FnList<Term> nums = new FnList<>(
-			new TermInt(parameters[0]),
-			new FnList<>(new TermInt(parameters[1]),
-			new FnList<>(new TermInt(parameters[2]),
-			new FnList<>(new TermInt(parameters[3]),
-			new FnList<>()))));
-
 		System.out.println("BFS Solutions:");
 		LnStrm<Term> bfsSolutions = solver.GameOf24_bfs_solve(
 			parameters[0], parameters[1], parameters[2], parameters[3]);
 		final int[] bfsCount = {0};
 		bfsSolutions.foritm0(t -> {
 			bfsCount[0]++;
-			if (bfsCount[0] <= 5) {
-				System.out.println(t.toString() + " = " + t.eval());
-			}
+			System.out.println(t.toString() + " = " + t.eval());
 		});
 		System.out.println("Total BFS solutions: " + bfsCount[0] + "\n");
 
@@ -248,9 +238,7 @@ public class Assign07_02 {
 		final int[] dfsCount = {0};
 		dfsSolutions.foritm0(t -> {
 			dfsCount[0]++;
-			if (dfsCount[0] <= 5) {
 				System.out.println(t.toString() + " = " + t.eval());
-			}
 		});
 		System.out.println("Total DFS solutions: " + dfsCount[0]);
 	}
