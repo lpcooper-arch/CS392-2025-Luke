@@ -1,22 +1,19 @@
-## Assign07_02 Explanation
+# Assignment 7 MySolution README
 
-To solve the Game of 24, we must represent all possible arithmetic expressions as nodes in a general tree (FnGtree).
+## Game of 24 Solution Using BFS and DFS
 
-Every node in the tree is either
+## Algorithm Overview
+The Game of 24 solver works in four steps:
 
-    - a TermInt (number)
+1) Generate all expression trees: The makeTree() method recursively combines pairs of numbers using +, -, *, / operations until all numbers are used, creating all possible arithmetic expressions.
 
-        or
+2) Wrap as a tree structure: The wrapAsTree() method places all generated expressions as children under a dummy root node, creating a general tree suitable for traversal.
 
-    - a TermOpr (operation applied to two subterms)
+3) Enumerate using BFS and DFS:
 
+Both methods enumerate all expressions, leading to the same output.
 
-The helper method makeTree recursively combines all possible pairs of terms to generate every valid arithmetic structure.
+4) Filter for solutions: The stream is filtered to remove the dummy root, then filtered again to find expressions that evaluate to 24.
 
-Each complete expression tree can then be evaluated to check if it equals 24.
-
-We search through the tree using a Breadth-First Search and Depth-First Search (both made in Assign07_01).
-
-Both methods filter results to find all expressions that evaluate to 24.
-
-We then provide code testing in the main method.
+## Changes to Assign07_01
+No changes were made to the MyDequeList implementation from Assignment 4.
