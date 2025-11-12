@@ -73,28 +73,32 @@ public class Assign07_02 {
 		for (int i = 0; i < terms.length(); i++) {
 			Term a = nth(terms, i);
 			for (int j = 0; j < terms.length(); j++) {
-				if (i != j) {
-					Term b = nth(terms, j);
+				if (i == j) continue;
 
-					FnList<Term> rest = remove2(terms, i, j);
+				Term b = nth(terms, j);
 
-					for (String op : OPS) {
-						TermOpr combined = new TermOpr(op, a, b);
+				FnList<Term> rest = remove2(terms, i, j);
 
-						try {
-							double val = combined.eval();
-							if (Double.isFinite(val)) {
-								FnList<Term> newList = new FnList<>(combined, rest);
-								results = append(results, makeTree(newList));
-							}
+				for (String op : OPS) {
+					if ((op.equals("+") || op.equals("*")) && i > j) continue;
 
-						} catch (Exception e) {}
+					TermOpr combined = new TermOpr(op, a, b);
+
+					try {
+						double val = combined.eval();
+						if (Double.isFinite(val)) {
+							FnList<Term> newList = new FnList<>(combined, rest);
+							results = append(results, makeTree(newList));
+						}
+
+					} catch (Exception e) {
 					}
 				}
 			}
 		}
 		return results;
 	}
+
 
 	private static <T> T nth(FnList<T> xs, int index) {
 		int i = 0;
@@ -125,7 +129,16 @@ public class Assign07_02 {
 		return new FnList<>(a.hd(), append(a.tl(), b));
 	}
 
-	// Converts an FnList of terms into an FnGtree so that they can be put through BFirst & DFirst
+	private static LnStrm<Term> listToStream(FnList<Term> terms) {
+	return new LnStrm<>(() -> {
+		if (terms.nilq()) {
+			return new LnStcn<>();
+		} else {
+			return new LnStcn<>(terms.hd(), listToStream(terms.tl()));
+		}
+	});
+	}
+
 	private FnGtree<Term> wrapAsTree(FnList<Term> terms) {
 		FnList<FnGtree<Term>> children = new FnList<>();
 
@@ -139,9 +152,10 @@ public class Assign07_02 {
 			terms = terms.tl();
 		}
 
-		final FnList<FnGtree<Term>> finalChildren = children;
+		final FnList<FnGtree<Term>> finalChildren = children.reverse();
+
 		return new FnGtree<Term>() {
-			public Term value() { return null; }
+			public Term value() { return new TermInt(0); }
 			public FnList<FnGtree<Term>> children() { return finalChildren; }
 		};
 	}
@@ -183,7 +197,6 @@ public class Assign07_02 {
 		FnList<Term> all = makeTree(nums);
 		FnGtree<Term> root = wrapAsTree(all);
 		return Assign07_01.DFirstEnumerate(root).filter0(t -> t != null && Math.abs(t.eval() - 24.0) < 1e-6);
-
 	}
 //
 	// Please add minimal testing code for GameOf24_bfs_solve
@@ -194,8 +207,14 @@ public class Assign07_02 {
 
 		Assign07_02 solver = new Assign07_02();
 		
-		// Test with known solvable case (for now): 8, 3, 8, 3
-		int[] parameters = {8, 3, 8, 3};
+		// Test with randomized cases
+		int[] parameters = 
+		{
+			(int) (Math.random() * 9) + 1,
+			(int) (Math.random() * 9) + 1,
+			(int) (Math.random() * 9) + 1,
+			(int) (Math.random() * 9) + 1
+		};
 		
 		System.out.print("Game Parameters: ");
 		for (int i = 0; i < parameters.length - 1; i++) {
@@ -210,19 +229,6 @@ public class Assign07_02 {
 			new FnList<>(new TermInt(parameters[2]),
 			new FnList<>(new TermInt(parameters[3]),
 			new FnList<>()))));
-		FnList<Term> all = solver.makeTree(nums);
-		System.out.println("Total expression trees generated: " + all.length());
-		
-		
-		int count = 0;
-		FnList<Term> temp = all;
-		while (temp.consq() && count < 10) {
-			Term t = temp.hd();
-			System.out.println(t.toString() + " = " + t.eval());
-			temp = temp.tl();
-			count++;
-		}
-		System.out.println();
 
 		System.out.println("BFS Solutions:");
 		LnStrm<Term> bfsSolutions = solver.GameOf24_bfs_solve(
