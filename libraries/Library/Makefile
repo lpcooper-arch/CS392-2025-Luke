@@ -19,6 +19,7 @@ compall:: FnTuple
 compall:: MyRefer
 compall:: MyStack
 compall:: MyQueue
+compall:: FnTree
 compall:: FnGtree
 compall:: BinSearch
 
@@ -45,6 +46,7 @@ MyQueue:: ; make -C MyQueue comp
 
 ###################################################################
 
+FnTree:: ; make -C FnTree comp
 FnGtree:: ; make -C FnGtree comp
 
 ###################################################################
@@ -67,7 +69,9 @@ $(ROOT)/Library/FnA1sz/*.class \
 $(ROOT)/Library/LnStrm/*.class \
 $(ROOT)/Library/FnTuple/*.class \
 $(ROOT)/Library/MyRefer/*.class \
-$(ROOT)/Library/MyStack/*.class $(ROOT)/Library/MyQueue/*.class \
+$(ROOT)/Library/MyStack/*.class \
+$(ROOT)/Library/MyQueue/*.class \
+$(ROOT)/Library/FnTree/*.class \
 $(ROOT)/Library/FnGtree/*.class $(ROOT)/Library/BinSearch/*.class
 
 ###################################################################
