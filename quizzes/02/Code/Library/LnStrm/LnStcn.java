@@ -10,7 +10,7 @@ public class LnStcn<T> {
 
     private class Node {
 	T head;
-	 LnStrm<T> tail;
+	LnStrm<T> tail;
     }
 
     public LnStcn() {

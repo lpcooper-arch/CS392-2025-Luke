@@ -1,5 +1,4 @@
 import Library.FnList.*;
-import Library.LnStrm.*;
 import Library.FnGtree.*;
 
 public class QueenPuzzleTest {
@@ -24,16 +23,16 @@ public class QueenPuzzleTest {
     public static void main(String[] args) {
 	QueenBoard bd0 =
 	    new QueenBoard(new FnList<Integer>());
-	LnStrm<FnList<Integer>> sols =
-	    (FnGtreeSUtil.DFirstEnumerate(bd0)).filter0((cs) -> cs.length() == N);
-	sols.foritm0(
+	FnGtreeSUtil.DFirstSearch(
+	     bd0,
 	     (cs) -> {
-		 nsol += 1;
-		 System.out.println("Solution(" + nsol + "):");
-		 board$print(cs);
+		 if (cs.length() == N) {
+		     nsol += 1;
+		     System.out.println("Solution(" + nsol + "):");
+		     board$print(cs);
+		 }
 	     }
-
-	);
+        );
     }
 //
 } // end of [public class QueenPuzzleTest{...}]
