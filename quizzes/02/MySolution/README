@@ -1,0 +1,81 @@
+############################################################
+
+Quiz02_01:
+(FnA1szLongestMonoSubsequence)
+
+Status: Solved With Testing
+
+
+If solved, please BRIEFLY explain your strategy.
+
+    While iterating through the sequence, I tracked the length of the current longest subsequence through
+    the dp array. Additionally, the prev array allowed me to reconstruct the subsequence once the iteration was complete.
+    The algorithm has O(n^2) time complexity because for each element in the sequence, I compare it with all previous elements in a nested loop, resulting in a quadratic number of comparisons.
+  
+############################################################
+
+Quiz02_02: 50 points
+(sort1000WithNoRecursion)
+
+Status: Solved With Testing
+
+
+If solved, please BRIEFLY explain your strategy.
+
+    While going through the array, I used an iterative version of merge sort to sort the array without recursion. I repeatedly merged smaller parts of the array, starting with size 1 and doubling the size each time, until the entire array was sorted. During each merge, I compared and combined elements into a temporary array, which was then copied back to the original array. This method avoids recursion by using loops instead.
+
+############################################################
+
+Quiz02_03: 50 points
+(Soduku_dfs_solve and Soduku_bfs_solve)
+
+Status: Solved With Testing
+
+
+If solved, please BRIEFLY explain your strategy.
+
+    In this problem, I used a FnList<FnList<Integer>> to represent my sudoku grid. Each integer cell holds an integer value from 0-9 (0 depicting an empty cell). I created methods for setting and getting values from the grid, as well as checking if a value placement is valid according to Sudoku rules. To optimize the search process, I implemented the Minimum Remaining Values method, which helps identify the most constrained empty cell. This method is used by both my DFSearch and BFSearch to efficiently find a solution.
+
+############################################################
+
+Please choose only ONE from Quiz02_04 and Quiz02_05.
+If unspecified, I assume by default that Quiz02_04 is
+chosen.
+
+############################################################
+
+Quiz02_04:
+30 points plus up to 20 bonus points
+(isAVL and genAVLBST)
+Please state the status of this question:
+
+NOT IMPLEMENTED (N/A)
+
+I chose to implement Quiz02_05 instead.
+
+############################################################
+
+Quiz02_05:
+30 points plus up to 20 bonus points
+(isRBT and genRedBlackBST)
+
+Status: Solved With Testing
+
+
+If solved, please BRIEFLY explain your strategy.
+
+    I had the isRBT method use a private helper method, checkRBT, to aid it in determining whether or not a certain binary tree was a Red-Black Tree or not. The genRedBlackBST method also ensures that the tree is built with minimal black height by recursively balancing the tree. This optimizes the RBT.
+
+############################################################
+
+Quiz02_06: 50 points
+(reroot and insert on DBST)
+
+Status: Solved With Testing
+
+
+If solved, please BRIEFLY explain your strategy.
+
+    I first ensured the insert method correctly adds a new key to the tree by performing a binary search and placing the new node as a leaf, while also updating the sizes of nodes up the tree. The reroot method was made to randomly select a node and use rotations (left or right) to make it the root, maintaining the binary search tree properties.
+    
+############################################################
