@@ -32,15 +32,18 @@ public class Quiz02_02 {
                 int j = mid + 1;
                 int k = left;
 
-                while (i <= mid && j <= right) {
-                    if (A[i].compareTo(A[j]) <= 0)
-                        temp[k++] = A[i++];
-                    else
-                        temp[k++] = A[j++];
+                for (; i <= mid && j <= right; k++) {
+                    if (A[i].compareTo(A[j]) <= 0) {
+                        temp[k] = A[i];
+                        i++;
+                    } else {
+                        temp[k] = A[j];
+                        j++;
+                    }
                 }
 
-                while (i <= mid) temp[k++] = A[i++];
-                while (j <= right) temp[k++] = A[j++];
+                for (; i <= mid; i++, k++) temp[k] = A[i];
+                for (; j <= right; j++, k++) temp[k] = A[j];
 
                 for (int t = left; t <= right; t++)
                     A[t] = temp[t];

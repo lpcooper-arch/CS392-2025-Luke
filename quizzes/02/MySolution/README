@@ -66,6 +66,11 @@ If solved, please BRIEFLY explain your strategy.
 
     I had the isRBT method use a private helper method, checkRBT, to aid it in determining whether or not a certain binary tree was a Red-Black Tree or not. The genRedBlackBST method also ensures that the tree is built with minimal black height by recursively balancing the tree. This optimizes the RBT.
 
+
+    ***ADDED WITH FIX***
+
+    Because the tree is perfectly balanced and alternates colors on each level, it uses the minimum number of black nodes allowed while still satisfying all red-black constraints. Any attempt to reduce the black height further would force either a red root or a red–red parent/child violation, so this construction achieves the minimal possible black height for any valid RBT with 1,000,000 keys.
+
 ############################################################
 
 Quiz02_06: 50 points

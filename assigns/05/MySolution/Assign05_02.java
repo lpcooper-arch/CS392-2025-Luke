@@ -47,10 +47,15 @@ public class Assign05_02 {
 	}
 	
     public static void main(String[] args) {
-		FnList<Integer> unsortedNums = FnListSUtil.rand$int$make(1_000_000);
-    	System.out.print("Unsorted Numbers: ");
-        unsortedNums.System$out$print();
-        System.out.println();
+		// Create the specific test list: 1, 0, 3, 2, 5, 4, 7, 6, 9, 8, 11, 10, ..., 999999, 999998
+
+		FnList<Integer> unsortedNums = FnListSUtil.nil();
+		for (int i = 999998; i >= 0; i -= 2) {
+			unsortedNums = FnListSUtil.cons(i, unsortedNums);
+			unsortedNums = FnListSUtil.cons(i + 1, unsortedNums);
+		}
+		
+    	System.out.print("Sorting 1,000,000 numbers... ");
 
         FnList<Integer> sortedNums = insertSort(unsortedNums);
         System.out.print("Sorted Numbers: ");

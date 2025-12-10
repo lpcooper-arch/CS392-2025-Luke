@@ -13,7 +13,10 @@ cleanall:: ; rm -f *.class
 
 ###################################################################
 
-comp:: ; javac -cp $(Library) FnGtree.java
-comp:: ; javac -cp $(Library) FnGtreeSUtil.java
+comp:: ; javac -cp $(Library) MyPQueue.java
+comp:: ; javac -cp $(Library) MyPQueueBase.java
+comp:: ; javac -cp $(Library) MyPQueueArray.java
+comp:: ; javac -cp $(Library) MyPQueueFullExn.java
+comp:: ; javac -cp $(Library) MyPQueueEmptyExn.java
 
 ########################(end of [Makefile])########################
