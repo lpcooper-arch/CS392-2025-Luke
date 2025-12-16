@@ -1,6 +1,4 @@
 import LnStrm.*;
-import LnStrm.LnStcn;
-import LnStrm.LnStrmSUtil;
 import FnTuple.*;
 /*
 import java.util.Random;

@@ -1,8 +1,9 @@
-import LnStrm.*;
+package MyLibrary.LnStrm;
+
 
 import java.util.function.ToIntBiFunction;
 
-public class Assign06_01 {
+public class LnStrmMergeUtil {
     
     public static <T> LnStrm<T> mergeLnStrm(LnStrm<LnStrm<T>> fxss, ToIntBiFunction<T, T> cmpr) {
         return new LnStrm<T>(() -> {
@@ -51,4 +52,6 @@ public class Assign06_01 {
             }
         });
     }
-} // end of [public class Assign06_01{...}]
+}
+
+// contains LnStrm merge from Assign06_01
