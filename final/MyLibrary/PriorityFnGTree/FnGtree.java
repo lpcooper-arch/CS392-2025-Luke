@@ -1,0 +1,9 @@
+package MyLibrary.PriorityFnGTree;
+
+import MyLibrary.FnList.*;
+
+public interface FnGtree<T> {
+    T value();
+    int priority();
+    FnList<FnGtree<T>> children();
+}

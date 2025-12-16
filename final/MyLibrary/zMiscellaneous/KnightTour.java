@@ -3,7 +3,7 @@ package MyLibrary.zMiscellaneous;
 import MyLibrary.FnList.*;
 import MyLibrary.FnTuple.*;
 import MyLibrary.LnStrm.*;
-import FnGtree.*;
+import MyLibrary.FnGtree.*;
 
 public class KnightTour {
     // HX-2025-12-02:

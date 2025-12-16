@@ -1,7 +1,7 @@
 package MyLibrary.zMiscellaneous;
 
 import MyLibrary.LnStrm.*;
-import FnTuple.*;
+import MyLibrary.FnTuple.*;
 /*
 import java.util.Random;
 import java.util.function.Function;

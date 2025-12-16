@@ -9,6 +9,8 @@ import java.util.function.Consumer;
 
 public class FnGtreeSUtil {
 //
+
+//
     public static<T>
 	void BFirstSearch
 	(FnGtree<T> root, Consumer<? super T> work) {
